@@ -2,178 +2,301 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>CryptoX | صرافی ارز دیجیتال</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>منو و دکمه‌های صفحه</title>
 <style>
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
 body {
-  margin: 0;
-  font-family: Tahoma, sans-serif;
-  background: #0f172a;
-  color: #fff;
+    background: url('https://uploadkon.ir/uploads/a1f810_26InShot-20260208-194202982.jpg') center center / contain no-repeat black;
+    overflow-x: hidden;
 }
 
-header {
-  background: #020617;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* دکمه‌ها روی صفحه */
+.btn-war, .btn-news {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 60px;
+    background: linear-gradient(145deg, #000, #1a1a1a);
+    color: white;
+    border: 2px solid #00f7ff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 1001; 
+    white-space: nowrap;
+    transition: 0.3s ease;
+    text-shadow: 0 0 6px #00f7ff, 0 0 12px #00f7ff;
+    box-shadow: 
+        0 0 8px rgba(0,247,255,0.6),
+        0 0 18px rgba(0,247,255,0.4),
+        inset 0 0 10px rgba(0,247,255,0.2);
 }
 
-header h1 {
-  margin: 0;
-  font-size: 20px;
-  color: #22c55e;
+.btn-war { top: 20px; }
+.btn-news { top: 90px; }
+
+.btn-war:hover, .btn-news:hover {
+    box-shadow: 
+        0 0 12px #00f7ff,
+        0 0 28px #00f7ff,
+        inset 0 0 12px rgba(0,247,255,0.4);
+    transform: translateX(-50%) scale(1.05);
 }
 
-nav a {
-  color: #cbd5f5;
-  margin-left: 15px;
-  text-decoration: none;
-  cursor: pointer;
+/* دکمه سه خط */
+.menu-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 1005;
 }
 
-.container {
-  padding: 20px;
+.menu-btn span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: #00f7ff;
+    margin: 6px 0;
+    border-radius: 3px;
+    transition: 0.3s;
+    box-shadow: 0 0 8px #00f7ff;
 }
 
-.price-box {
-  background: #020617;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.menu-btn.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.menu-btn.active span:nth-child(2) { opacity: 0; }
+.menu-btn.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+/* منوی کشویی */
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -60%;
+    width: 60%;
+    height: 100%;
+    background: #000;
+    transition: 0.4s ease;
+    z-index: 1002;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 2px solid #00f7ff;
+    box-shadow: -10px 0 30px rgba(0,247,255,0.25);
 }
 
-.price {
-  font-size: 28px;
-  font-weight: bold;
+.side-menu.active { right: 0; }
+
+/* دکمه داخل منو */
+.side-menu button {
+    background: #111;
+    color: white;
+    border: 1.5px solid #ff00ff;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+    text-shadow: 0 0 5px #ff00ff;
+    box-shadow: 0 0 8px rgba(255,0,255,0.5);
 }
 
-select {
-  background: #020617;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #334155;
+.side-menu button:hover {
+    background: #222;
+    box-shadow: 0 0 16px #ff00ff, 0 0 30px #ff00ff;
 }
 
-/* پیام بزودی */
-#soonBox {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #020617;
-  color: #fff;
-  padding: 15px 25px;
-  border-radius: 10px;
-  display: none;
-  box-shadow: 0 0 20px rgba(34,197,94,.4);
-  z-index: 999;
+/* overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 1000;
+}
+.overlay.active { display: block; }
+
+/* مودال‌ها */
+.modal, .modal-record, .modal-news {
+    display: none;
+    position: fixed;
+    width: 320px;
+    max-width: 90%;
+    background: rgba(0,0,0,0.95);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 20px;
+    z-index: 1006;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #00f7ff;
+    box-shadow: 
+        0 0 15px rgba(0,247,255,0.5),
+        0 0 40px rgba(0,247,255,0.3);
+}
+
+.modal-record { width: 300px; font-size: 18px; z-index: 1007; }
+.modal-news { width: 280px; font-size: 18px; z-index: 1008; }
+
+/* ضربدر مودال */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    cursor: pointer;
+    font-size: 26px;
+    color: #aaa;
+    transition: 0.2s;
+    text-shadow: 0 0 6px #00f7ff;
+}
+.close-btn:hover { color: white; }
+
+/* عکس رکورد */
+.record-img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 2px solid #00f7ff;
+    box-shadow: 0 0 12px rgba(0,247,255,0.6);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* clone بزرگ شده تصویر بدون overlay */
+.enlarge-img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 40px #00f7ff;
+    cursor: zoom-out;
+    z-index: 1010;
+    transition: transform 0.3s ease;
 }
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1>CryptoX</h1>
-  <nav>
-    <a onclick="soon()">بازار</a>
-    <a onclick="soon()">معامله</a>
-    <a onclick="soon()">کیف پول</a>
-    <a onclick="soon()">پروفایل</a>
-  </nav>
-</header>
+<button class="btn-war" id="warBtn">وار ها</button>
+<button class="btn-news" id="newsBtn">خبرهای فوری💬</button>
 
-<div class="container">
+<div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
 
-  <div class="price-box">
-    <div>
-      <div id="symbol">BTC / USDT</div>
-      <div class="price" id="price">--</div>
-    </div>
+<div class="overlay" id="overlay"></div>
 
-    <select id="coinSelect">
-      <option value="btcusdt">BTC</option>
-      <option value="ethusdt">ETH</option>
-      <option value="bnbusdt">BNB</option>
-      <option value="dogeusdt">DOGE</option>
-    </select>
-  </div>
-
-  <!-- نمودار -->
-  <div id="tradingview"></div>
-
+<div class="side-menu" id="sideMenu">
+    <button id="supportBtn">پشتیبانی</button>
+    <button id="recordBtn">بیشترین رکورد🇮🇷</button>
 </div>
 
-<!-- باکس بزودی -->
-<div id="soonBox">🚧 این بخش بزودی فعال می‌شود</div>
+<div class="modal" id="modal">
+    <span class="close-btn" id="closeModal">×</span>
+    فعلاً واری وجود ندارد
+</div>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
+<div class="modal-record" id="recordModal">
+    <span class="close-btn" id="closeRecord">×</span>
+    بیشترین کاربران : 9 نفر<br><br>
+    <img src="https://uploadkon.ir/uploads/153a11_26InShot-20260211-133346499.jpg" class="record-img" id="recordImg">
+</div>
+
+<div class="modal-news" id="newsModal">
+    <span class="close-btn" id="closeNews">×</span>
+    هیچ خبری فعلا وجود نداره<br>
+    خیالت تخت😂
+</div>
 
 <script>
-let socket;
-let lastPrice = 0;
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
 
-function startSocket(symbol) {
-  if (socket) socket.close();
+const warBtn = document.getElementById("warBtn");
+const modal = document.getElementById("modal");
+const closeModalBtn = document.getElementById("closeModal");
 
-  socket = new WebSocket(
-    "wss://stream.binance.com:9443/ws/" + symbol + "@trade"
-  );
+const supportBtn = document.getElementById("supportBtn");
+const recordBtn = document.getElementById("recordBtn");
+const recordModal = document.getElementById("recordModal");
+const closeRecordBtn = document.getElementById("closeRecord");
 
-  socket.onmessage = function (event) {
-    let data = JSON.parse(event.data);
-    let price = parseFloat(data.p).toFixed(2);
-    let priceEl = document.getElementById("price");
+const newsBtn = document.getElementById("newsBtn");
+const newsModal = document.getElementById("newsModal");
+const closeNewsBtn = document.getElementById("closeNews");
 
-    priceEl.innerText = price;
+// منوی کشویی
+menuBtn.onclick = function() {
+    menuBtn.classList.toggle("active");
+    sideMenu.classList.toggle("active");
+    overlay.classList.toggle("active");
+    if(sideMenu.classList.contains("active")) warBtn.style.zIndex = "1002";
+    else warBtn.style.zIndex = "1001";
+};
 
-    if (price > lastPrice) priceEl.style.color = "#22c55e";
-    if (price < lastPrice) priceEl.style.color = "#ef4444";
+overlay.onclick = function() {
+    menuBtn.classList.remove("active");
+    sideMenu.classList.remove("active");
+    overlay.classList.remove("active");
+    warBtn.style.zIndex = "1001";
+};
 
-    lastPrice = price;
-  };
+// مودال وار
+warBtn.onclick = function(){ modal.style.display = "block"; }
+closeModalBtn.onclick = function(){ modal.style.display = "none"; }
+
+// مودال رکورد
+recordBtn.onclick = function(){ recordModal.style.display = "block"; }
+closeRecordBtn.onclick = function(){ recordModal.style.display = "none"; }
+
+// مودال خبر
+supportBtn.onclick = function(){ window.open("https://rubika.ir/kasinistamo","_blank"); }
+newsBtn.onclick = function(){ newsModal.style.display = "block"; }
+closeNewsBtn.onclick = function(){ newsModal.style.display = "none"; }
+
+// بزرگ کردن تصویر بدون تغییر شکل مودال پشت
+const recordImg = document.getElementById("recordImg");
+
+recordImg.onclick = function() {
+    // اگر clone هنوز ساخته نشده
+    if(!document.getElementById("enlargedClone")) {
+        const clone = recordImg.cloneNode(); // کپی تصویر
+        clone.id = "enlargedClone";
+        clone.classList.add("enlarge-img");
+        document.body.appendChild(clone);
+
+        // کلیک روی تصویر بزرگ برای بستن
+        clone.onclick = function() {
+            clone.remove();
+        }
+    }
 }
-
-function loadChart(symbol) {
-  document.getElementById("tradingview").innerHTML = "";
-  new TradingView.widget({
-    width: "100%",
-    height: 500,
-    symbol: "BINANCE:" + symbol.toUpperCase(),
-    interval: "15",
-    timezone: "Asia/Tehran",
-    theme: "dark",
-    style: "1",
-    locale: "fa",
-    container_id: "tradingview"
-  });
-}
-
-document.getElementById("coinSelect").addEventListener("change", function () {
-  let symbol = this.value;
-  document.getElementById("symbol").innerText =
-    symbol.toUpperCase().replace("USDT", " / USDT");
-
-  startSocket(symbol);
-  loadChart(symbol);
-});
-
-function soon() {
-  let box = document.getElementById("soonBox");
-  box.style.display = "block";
-  setTimeout(() => box.style.display = "none", 2000);
-}
-
-// پیش‌فرض
-startSocket("btcusdt");
-loadChart("btcusdt");
 </script>
 
 </body>
-</html>
+  </html>
